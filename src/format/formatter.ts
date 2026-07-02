@@ -1,4 +1,4 @@
-import type { DataFormat } from '@/schemas/data-format-schema.ts'
+import type { DataFormat } from '#/schemas/data-format-schema.ts'
 
 export function formatter(format: DataFormat, alternative?: boolean) {
   return (value: string | number) => {

@@ -1,18 +1,18 @@
 import Chart from 'chart.js/auto'
-import { mkdir } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 import { Canvas } from 'skia-canvas'
 
-import type { ChartImageRequest } from '@/schemas/chart-image-request-schema.ts'
-import type { ChartType } from '@/schemas/chart-type-schema.ts'
+import type { ChartImageRequest } from '#/schemas/chart-image-request-schema.ts'
+import type { ChartType } from '#/schemas/chart-type-schema.ts'
 
-import { createChartConfig } from '@/charts/config/create-chart-config.ts'
-import { registerCharts } from '@/charts/register-charts.ts'
+import { createChartConfig } from '#/charts/config/create-chart-config.ts'
+import { registerCharts } from '#/charts/register-charts.ts'
 import {
   DEVICE_PIXEL_RATIO,
   EXPORT_PADDING,
   OUTPUT_DIR,
-} from '@/constants/export.ts'
-import { createTableData } from '@/format/create-table-data.ts'
+} from '#/constants/export.ts'
+import { createTableData } from '#/format/create-table-data.ts'
 
 import { addExportPadding } from './add-export-padding.ts'
 import { asChartJsCanvas } from './as-chart-js-canvas.ts'
@@ -112,7 +112,7 @@ export async function renderChartImage(
   const pngBuffer = await exportCanvas.toBuffer('png')
 
   await mkdir(OUTPUT_DIR, { recursive: true })
-  await Bun.write(filepath, pngBuffer)
+  await writeFile(filepath, pngBuffer)
 
   chart.destroy()
 

@@ -1,10 +1,10 @@
 import type { ChartConfiguration, ChartDataset } from 'chart.js'
 
-import type { ChartOptions } from '@/types.ts'
+import type { ChartOptions } from '#/types.ts'
 
-import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
-import { getChartColor } from '@/charts/get-chart-color.ts'
-import { createDonutLabelsPlugin } from '@/charts/plugins/create-donut-labels-plugin.ts'
+import { formatTooltipLabel } from '#/charts/format-tooltip-label.ts'
+import { getChartColor } from '#/charts/get-chart-color.ts'
+import { createDonutLabelsPlugin } from '#/charts/plugins/create-donut-labels-plugin.ts'
 
 import { defaultConfig } from './default-config.ts'
 import { addCutout } from './helpers/add-cutout.ts'

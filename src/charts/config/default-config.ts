@@ -1,8 +1,8 @@
 import type { ChartConfiguration, ChartDataset } from 'chart.js'
 
-import type { ChartJsType } from '@/types.ts'
+import type { ChartJsType } from '#/types.ts'
 
-import { DEVICE_PIXEL_RATIO } from '@/constants/export.ts'
+import { DEVICE_PIXEL_RATIO } from '#/constants/export.ts'
 
 export function defaultConfig({
   type,

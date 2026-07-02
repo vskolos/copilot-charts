@@ -1,8 +1,9 @@
-import { beforeAll, describe, expect, test } from 'bun:test'
+import assert from 'node:assert/strict'
+import { before, describe, test } from 'node:test'
 import { Canvas } from 'skia-canvas'
 
-import { DEVICE_PIXEL_RATIO } from '@/constants/export.ts'
-import { getInterFontCss } from '@/utils/get-inter-font-css.ts'
+import { DEVICE_PIXEL_RATIO } from '#/constants/export.ts'
+import { getInterFontCss } from '#/utils/get-inter-font-css.ts'
 
 import { asChartJsCanvas } from './as-chart-js-canvas.ts'
 import { registerFonts } from './register-fonts.ts'
@@ -33,12 +34,12 @@ function countDarkPixels(
   return count
 }
 
-beforeAll(() => {
+before(() => {
   registerFonts()
 })
 
-describe('asChartJsCanvas', () => {
-  test('ignores fillText maxWidth that would clip the last glyph', () => {
+void describe('asChartJsCanvas', () => {
+  void test('ignores fillText maxWidth that would clip the last glyph', () => {
     const canvas = new Canvas(160, 48)
     asChartJsCanvas(canvas)
 
@@ -72,7 +73,7 @@ describe('asChartJsCanvas', () => {
       y1: canvas.height,
     })
 
-    expect(rightEdge).toBeGreaterThan(10)
-    expect(leftEdge).toBeGreaterThan(10)
+    assert.ok(rightEdge > 10)
+    assert.ok(leftEdge > 10)
   })
 })

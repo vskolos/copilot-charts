@@ -1,6 +1,6 @@
 import type { ChartConfiguration } from 'chart.js'
 
-import { Y_AXIS_KEY } from '@/constants/config-keys.ts'
+import { Y_AXIS_KEY } from '#/constants/config-keys.ts'
 
 export function addYScaleGrid(display: boolean) {
   return (config: ChartConfiguration): ChartConfiguration => ({

@@ -1,56 +1,84 @@
-import { chartImageRequestSchema } from '@/schemas/chart-image-request-schema.ts'
-import { renderChartImage } from '@/server/render-chart-image.ts'
-import { RequestValidationError } from '@/server/request-validation-error.ts'
-import { UnprocessableDataError } from '@/server/unprocessable-data-error.ts'
+import type { IncomingMessage } from 'node:http'
 
-const server = Bun.serve({
-  port: Number(process.env['PORT']) || 3000,
+import { createServer } from 'node:http'
 
-  routes: {
-    '/get-chart-image': {
-      POST: async (req) => {
-        try {
-          const body: unknown = await req.json()
-          const parsed = chartImageRequestSchema.safeParse(body)
+import { chartImageRequestSchema } from '#/schemas/chart-image-request-schema.ts'
+import { renderChartImage } from '#/server/render-chart-image.ts'
+import { RequestValidationError } from '#/server/request-validation-error.ts'
+import { UnprocessableDataError } from '#/server/unprocessable-data-error.ts'
 
-          if (!parsed.success) {
-            const [issue] = parsed.error.issues
+const port = Number(process.env['PORT']) || 3000
 
-            if (issue?.path[0] === 'data') {
-              throw new UnprocessableDataError(issue.message)
-            }
+async function handleGetChartImage(req: IncomingMessage) {
+  try {
+    const body: unknown = JSON.parse(await readBody(req))
+    const parsed = chartImageRequestSchema.safeParse(body)
 
-            throw new RequestValidationError(
-              issue?.message ?? 'invalid request',
-            )
-          }
+    if (!parsed.success) {
+      const [issue] = parsed.error.issues
 
-          const result = await renderChartImage(parsed.data)
+      if (issue?.path[0] === 'data') {
+        throw new UnprocessableDataError(issue.message)
+      }
 
-          return Response.json(result)
-        } catch (error) {
-          if (error instanceof RequestValidationError) {
-            return Response.json({ error: error.message }, { status: 400 })
-          }
+      throw new RequestValidationError(issue?.message ?? 'invalid request')
+    }
 
-          if (error instanceof UnprocessableDataError) {
-            return Response.json({ error: error.message }, { status: 422 })
-          }
+    const result = await renderChartImage(parsed.data)
 
-          console.error(error)
+    return Response.json(result)
+  } catch (error) {
+    if (error instanceof RequestValidationError) {
+      return Response.json({ error: error.message }, { status: 400 })
+    }
 
-          return Response.json(
-            { error: 'internal server error' },
-            { status: 500 },
-          )
-        }
-      },
-    },
-  },
+    if (error instanceof UnprocessableDataError) {
+      return Response.json({ error: error.message }, { status: 422 })
+    }
 
-  fetch() {
-    return Response.json({ error: 'not found' }, { status: 404 })
-  },
+    if (error instanceof SyntaxError) {
+      return Response.json({ error: 'invalid request' }, { status: 400 })
+    }
+
+    console.error(error)
+
+    return Response.json({ error: 'internal server error' }, { status: 500 })
+  }
+}
+
+function readBody(req: IncomingMessage) {
+  return new Promise<string>((resolve, reject) => {
+    const chunks: Buffer[] = []
+
+    req.on('data', (chunk: Buffer) => {
+      chunks.push(chunk)
+    })
+
+    req.on('end', () => {
+      resolve(Buffer.concat(chunks).toString('utf8'))
+    })
+
+    req.on('error', reject)
+  })
+}
+
+const server = createServer(async (req, res) => {
+  const url = new URL(
+    req.url ?? '/',
+    `http://${req.headers.host ?? 'localhost'}`,
+  )
+
+  if (req.method === 'POST' && url.pathname === '/get-chart-image') {
+    const response = await handleGetChartImage(req)
+    res.writeHead(response.status, Object.fromEntries(response.headers))
+    res.end(Buffer.from(await response.arrayBuffer()))
+    return
+  }
+
+  res.writeHead(404, { 'content-type': 'application/json' })
+  res.end(JSON.stringify({ error: 'not found' }))
 })
 
-console.info(`Server running at ${server.url}`)
+server.listen(port, () => {
+  console.info(`Server running at http://localhost:${port}`)
+})

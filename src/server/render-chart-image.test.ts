@@ -1,9 +1,11 @@
-import { describe, expect, test } from 'bun:test'
+import assert from 'node:assert/strict'
+import { access, stat } from 'node:fs/promises'
+import { describe, test } from 'node:test'
 
-import type { ChartType } from '@/schemas/chart-type-schema.ts'
-import type { EntryData } from '@/schemas/entry-data-schema.ts'
+import type { ChartType } from '#/schemas/chart-type-schema.ts'
+import type { EntryData } from '#/schemas/entry-data-schema.ts'
 
-import { OUTPUT_DIR } from '@/constants/export.ts'
+import { OUTPUT_DIR } from '#/constants/export.ts'
 
 import { renderChartImage } from './render-chart-image.ts'
 
@@ -19,8 +21,8 @@ const rowEntryData: EntryData = {
 const colTypes: ChartType[] = ['area', 'line', 'stacked bar', 'heatmap']
 const rowTypes: ChartType[] = ['bar', 'donut', 'radar', 'treemap']
 
-describe('renderChartImage', () => {
-  test('renders all chart types to disk', async () => {
+void describe('renderChartImage', () => {
+  void test('renders all chart types to disk', async () => {
     for (const type of [...colTypes, ...rowTypes]) {
       const data = colTypes.includes(type) ? colEntryData : rowEntryData
 
@@ -34,11 +36,11 @@ describe('renderChartImage', () => {
       })
 
       const filepath = `${OUTPUT_DIR}/${result.filename}`
-      expect(result.filename.endsWith('.png')).toBe(true)
-      expect(await Bun.file(filepath).exists()).toBe(true)
+      assert.strictEqual(result.filename.endsWith('.png'), true)
+      await access(filepath)
 
-      const file = Bun.file(filepath)
-      expect(file.size).toBeGreaterThan(1000)
+      const { size } = await stat(filepath)
+      assert.ok(size > 1000)
     }
   })
 })

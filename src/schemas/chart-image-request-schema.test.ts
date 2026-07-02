@@ -1,15 +1,16 @@
-import { describe, expect, test } from 'bun:test'
+import assert from 'node:assert/strict'
+import { describe, test } from 'node:test'
 
-import type { EntryData } from '@/schemas/entry-data-schema.ts'
+import type { EntryData } from '#/schemas/entry-data-schema.ts'
 
-import { chartImageRequestSchema } from '@/schemas/chart-image-request-schema.ts'
+import { chartImageRequestSchema } from '#/schemas/chart-image-request-schema.ts'
 
 const rowEntryData: EntryData = {
   'Week 1': { 'Cat A': 100, 'Cat B': 200, 'Cat C': 150 },
 }
 
-describe('chartImageRequestSchema', () => {
-  test('accepts valid request', () => {
+void describe('chartImageRequestSchema', () => {
+  void test('accepts valid request', () => {
     const result = chartImageRequestSchema.safeParse({
       type: 'bar',
       data: rowEntryData,
@@ -19,14 +20,11 @@ describe('chartImageRequestSchema', () => {
       softColors: false,
     })
 
-    expect(result.success).toBe(true)
-
-    if (result.success) {
-      expect(result.data.type).toBe('bar')
-    }
+    assert.strictEqual(result.success, true)
+    assert.strictEqual(result.data.type, 'bar')
   })
 
-  test('accepts request without softColors', () => {
+  void test('accepts request without softColors', () => {
     const result = chartImageRequestSchema.safeParse({
       type: 'bar',
       data: rowEntryData,
@@ -35,14 +33,11 @@ describe('chartImageRequestSchema', () => {
       format: 'unit',
     })
 
-    expect(result.success).toBe(true)
-
-    if (result.success) {
-      expect(result.data.softColors).toBeUndefined()
-    }
+    assert.strictEqual(result.success, true)
+    assert.strictEqual(result.data.softColors, undefined)
   })
 
-  test('accepts request with title', () => {
+  void test('accepts request with title', () => {
     const result = chartImageRequestSchema.safeParse({
       type: 'bar',
       data: rowEntryData,
@@ -52,14 +47,11 @@ describe('chartImageRequestSchema', () => {
       title: 'Weekly revenue',
     })
 
-    expect(result.success).toBe(true)
-
-    if (result.success) {
-      expect(result.data.title).toBe('Weekly revenue')
-    }
+    assert.strictEqual(result.success, true)
+    assert.strictEqual(result.data.title, 'Weekly revenue')
   })
 
-  test('rejects non-string title', () => {
+  void test('rejects non-string title', () => {
     const result = chartImageRequestSchema.safeParse({
       type: 'bar',
       data: rowEntryData,
@@ -69,14 +61,11 @@ describe('chartImageRequestSchema', () => {
       title: 42,
     })
 
-    expect(result.success).toBe(false)
-
-    if (!result.success) {
-      expect(result.error.issues[0]?.path).toEqual(['title'])
-    }
+    assert.strictEqual(result.success, false)
+    assert.deepStrictEqual(result.error.issues[0]?.path, ['title'])
   })
 
-  test('rejects unknown type', () => {
+  void test('rejects unknown type', () => {
     const result = chartImageRequestSchema.safeParse({
       type: 'pie',
       data: rowEntryData,
@@ -86,14 +75,11 @@ describe('chartImageRequestSchema', () => {
       softColors: false,
     })
 
-    expect(result.success).toBe(false)
-
-    if (!result.success) {
-      expect(result.error.issues[0]?.path).toEqual(['type'])
-    }
+    assert.strictEqual(result.success, false)
+    assert.deepStrictEqual(result.error.issues[0]?.path, ['type'])
   })
 
-  test('rejects null data', () => {
+  void test('rejects null data', () => {
     const result = chartImageRequestSchema.safeParse({
       type: 'bar',
       data: null,
@@ -103,10 +89,7 @@ describe('chartImageRequestSchema', () => {
       softColors: false,
     })
 
-    expect(result.success).toBe(false)
-
-    if (!result.success) {
-      expect(result.error.issues[0]?.path).toEqual(['data'])
-    }
+    assert.strictEqual(result.success, false)
+    assert.deepStrictEqual(result.error.issues[0]?.path, ['data'])
   })
 })

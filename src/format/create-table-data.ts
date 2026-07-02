@@ -1,5 +1,5 @@
-import type { EntryData } from '@/schemas/entry-data-schema.ts'
-import type { TableData } from '@/types.ts'
+import type { EntryData } from '#/schemas/entry-data-schema.ts'
+import type { TableData } from '#/types.ts'
 
 function transpose(array: string[][]) {
   if (array.length === 0 || !array[0]?.length) {

@@ -2,13 +2,12 @@ import type { ChartConfiguration, ChartDataset } from 'chart.js'
 import type { MatrixDataPoint } from 'chartjs-chart-matrix'
 import type { Context } from 'chartjs-plugin-datalabels'
 
-import ChartDataLabels from 'chartjs-plugin-datalabels'
+import type { ChartOptions } from '#/types.ts'
 
-import type { ChartOptions } from '@/types.ts'
-
-import { VALUE_KEY, X_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
-import { INTER_FONT_FAMILY } from '@/constants/export.ts'
-import { formatter } from '@/format/formatter.ts'
+import { chartDataLabelsPlugin } from '#/charts/plugins/chart-data-labels-plugin.ts'
+import { VALUE_KEY, X_AXIS_KEY, Y_AXIS_KEY } from '#/constants/config-keys.ts'
+import { INTER_FONT_FAMILY } from '#/constants/export.ts'
+import { formatter } from '#/format/formatter.ts'
 
 import { defaultConfig } from './default-config.ts'
 import { addDataLabels } from './helpers/add-data-labels.ts'
@@ -110,7 +109,7 @@ export function createHeatMapChartConfig({
       datasets,
       labels: [],
     }),
-    addPlugins([ChartDataLabels]),
+    addPlugins([chartDataLabelsPlugin]),
     addXScaleLabels(xLabels),
     addXScaleGrid(false),
     addYScaleLabels(yLabels, true),

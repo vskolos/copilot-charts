@@ -1,12 +1,12 @@
 import type { ChartConfiguration, ChartDataset } from 'chart.js'
 import type { TreemapDataPoint } from 'chartjs-chart-treemap'
 
-import type { ChartOptions } from '@/types.ts'
+import type { ChartOptions } from '#/types.ts'
 
-import { getChartColor } from '@/charts/get-chart-color.ts'
-import { DATA_KEY, VALUE_KEY } from '@/constants/config-keys.ts'
-import { INTER_FONT_FAMILY } from '@/constants/export.ts'
-import { formatter } from '@/format/formatter.ts'
+import { getChartColor } from '#/charts/get-chart-color.ts'
+import { DATA_KEY, VALUE_KEY } from '#/constants/config-keys.ts'
+import { INTER_FONT_FAMILY } from '#/constants/export.ts'
+import { formatter } from '#/format/formatter.ts'
 
 import { defaultConfig } from './default-config.ts'
 import { addLegend } from './helpers/add-legend.ts'

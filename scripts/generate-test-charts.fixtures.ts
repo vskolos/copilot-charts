@@ -1,5 +1,5 @@
-import type { ChartImageRequest } from '@/schemas/chart-image-request-schema.ts'
-import type { EntryData } from '@/schemas/entry-data-schema.ts'
+import type { ChartImageRequest } from '#/schemas/chart-image-request-schema.ts'
+import type { EntryData } from '#/schemas/entry-data-schema.ts'
 
 type VisualRegressionCase = {
   name: string

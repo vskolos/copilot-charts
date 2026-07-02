@@ -1,6 +1,6 @@
 import type { ChartConfiguration } from 'chart.js'
 
-import type { X_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
+import type { X_AXIS_KEY, Y_AXIS_KEY } from '#/constants/config-keys.ts'
 
 type Point = {
   [X_AXIS_KEY]: number

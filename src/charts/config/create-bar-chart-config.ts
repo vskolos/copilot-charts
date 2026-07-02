@@ -1,13 +1,12 @@
 import type { ChartConfiguration, ChartDataset } from 'chart.js'
 
-import ChartDataLabels from 'chartjs-plugin-datalabels'
+import type { ChartOptions } from '#/types.ts'
 
-import type { ChartOptions } from '@/types.ts'
-
-import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
-import { getChartColor } from '@/charts/get-chart-color.ts'
-import { INTER_FONT_FAMILY } from '@/constants/export.ts'
-import { formatter } from '@/format/formatter.ts'
+import { formatTooltipLabel } from '#/charts/format-tooltip-label.ts'
+import { getChartColor } from '#/charts/get-chart-color.ts'
+import { chartDataLabelsPlugin } from '#/charts/plugins/chart-data-labels-plugin.ts'
+import { INTER_FONT_FAMILY } from '#/constants/export.ts'
+import { formatter } from '#/format/formatter.ts'
 
 import { defaultConfig } from './default-config.ts'
 import { addChartPadding } from './helpers/add-chart-padding.ts'
@@ -48,7 +47,7 @@ export function createBarChartConfig({
 
   return pipe(
     defaultConfig({ type: 'bar', datasets, labels }),
-    addPlugins([ChartDataLabels]),
+    addPlugins([chartDataLabelsPlugin]),
     addChartPadding({ top: 8, right: 16, left: 16 }),
     addXScaleGrid(false),
     addXScaleBorder(false),

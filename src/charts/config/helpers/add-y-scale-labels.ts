@@ -1,6 +1,6 @@
 import type { ChartConfiguration } from 'chart.js'
 
-import { Y_AXIS_KEY } from '@/constants/config-keys.ts'
+import { Y_AXIS_KEY } from '#/constants/config-keys.ts'
 
 export function addYScaleLabels(labels: string[], offset?: boolean) {
   return (config: ChartConfiguration): ChartConfiguration => ({

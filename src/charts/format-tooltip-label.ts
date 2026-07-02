@@ -1,7 +1,7 @@
-import type { DataFormat } from '@/schemas/data-format-schema.ts'
+import type { DataFormat } from '#/schemas/data-format-schema.ts'
 
-import { R_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
-import { formatter } from '@/format/formatter.ts'
+import { R_AXIS_KEY, Y_AXIS_KEY } from '#/constants/config-keys.ts'
+import { formatter } from '#/format/formatter.ts'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null

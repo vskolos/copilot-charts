@@ -1,0 +1,5 @@
+patchedDependencies:
+  chartjs-plugin-datalabels@2.2.0: patches/chartjs-plugin-datalabels@2.2.0.patch
+
+allowBuilds:
+  skia-canvas: true

@@ -1,6 +1,6 @@
 import type { ChartConfiguration } from 'chart.js'
 
-import { R_AXIS_KEY } from '@/constants/config-keys.ts'
+import { R_AXIS_KEY } from '#/constants/config-keys.ts'
 
 export function addRScaleTicksFormatter(
   formatValue: (val: string | number) => string,

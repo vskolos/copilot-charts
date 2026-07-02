@@ -2,12 +2,15 @@
   "name": "data-charts",
   "private": true,
   "type": "module",
-  "module": "index.ts",
+  "imports": {
+    "#/*": "./src/*"
+  },
   "scripts": {
-    "dev": "bun --watch index.ts",
-    "start": "bun index.ts",
-    "generate-test-charts": "bun scripts/generate-test-charts.ts",
-    "test": "bun test",
+    "dev": "node --watch index.ts",
+    "start": "node index.ts",
+    "generate-test-charts": "node scripts/generate-test-charts.ts",
+    "test": "node --test './**/*.test.ts'",
+    "typecheck": "tsc --noEmit",
     "format": "oxfmt",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix"
@@ -22,17 +25,15 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/bun": "latest",
+    "@types/node": "^24.13.2",
     "eslint-plugin-sonarjs": "^4.1.0",
     "oxfmt": "^0.57.0",
     "oxlint": "^1.72.0",
     "oxlint-tsgolint": "^0.24.0",
     "typescript": "^6.0.3"
   },
-  "patchedDependencies": {
-    "chartjs-plugin-datalabels@2.2.0": "patches/chartjs-plugin-datalabels@2.2.0.patch"
+  "engines": {
+    "node": ">=24"
   },
-  "trustedDependencies": [
-    "skia-canvas"
-  ]
+  "packageManager": "pnpm@11.9.0"
 }

@@ -1,7 +1,7 @@
 import type { Chart, ChartMeta } from 'chart.js'
 
-import { X_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
-import { getInterFontCss } from '@/utils/get-inter-font-css.ts'
+import { X_AXIS_KEY, Y_AXIS_KEY } from '#/constants/config-keys.ts'
+import { getInterFontCss } from '#/utils/get-inter-font-css.ts'
 
 type ArcLike = {
   [X_AXIS_KEY]: number

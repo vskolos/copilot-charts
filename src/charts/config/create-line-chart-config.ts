@@ -1,10 +1,10 @@
 import type { ChartConfiguration, ChartDataset } from 'chart.js'
 
-import type { ChartOptions } from '@/types.ts'
+import type { ChartOptions } from '#/types.ts'
 
-import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
-import { getChartColor } from '@/charts/get-chart-color.ts'
-import { formatter } from '@/format/formatter.ts'
+import { formatTooltipLabel } from '#/charts/format-tooltip-label.ts'
+import { getChartColor } from '#/charts/get-chart-color.ts'
+import { formatter } from '#/format/formatter.ts'
 
 import { defaultConfig } from './default-config.ts'
 import { addLegend } from './helpers/add-legend.ts'

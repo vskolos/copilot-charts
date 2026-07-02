@@ -1,9 +1,10 @@
-import { describe, expect, test } from 'bun:test'
+import assert from 'node:assert/strict'
+import { describe, test } from 'node:test'
 
-import type { ChartType } from '@/schemas/chart-type-schema.ts'
-import type { EntryData } from '@/schemas/entry-data-schema.ts'
+import type { ChartType } from '#/schemas/chart-type-schema.ts'
+import type { EntryData } from '#/schemas/entry-data-schema.ts'
 
-import { createTableData } from '@/format/create-table-data.ts'
+import { createTableData } from '#/format/create-table-data.ts'
 
 import { createChartConfig } from './create-chart-config.ts'
 
@@ -19,39 +20,39 @@ const rowEntryData: EntryData = {
 const colTypes: ChartType[] = ['area', 'line', 'stacked bar', 'heatmap']
 const rowTypes: ChartType[] = ['bar', 'donut', 'radar', 'treemap']
 
-describe('createChartConfig', () => {
+void describe('createChartConfig', () => {
   for (const type of colTypes) {
-    test(`builds config for ${type}`, () => {
+    void test(`builds config for ${type}`, () => {
       const config = createChartConfig(type)({
         softColors: false,
         data: createTableData(colEntryData),
         format: 'unit',
       })
 
-      expect(config).not.toBeNull()
-      expect(config?.type).toBeTruthy()
+      assert.notStrictEqual(config, null)
+      assert.ok(config?.type)
     })
   }
 
   for (const type of rowTypes) {
-    test(`builds config for ${type}`, () => {
+    void test(`builds config for ${type}`, () => {
       const config = createChartConfig(type)({
         softColors: true,
         data: createTableData(rowEntryData),
         format: 'money',
       })
 
-      expect(config).not.toBeNull()
+      assert.notStrictEqual(config, null)
     })
   }
 
-  test('returns null for empty data', () => {
+  void test('returns null for empty data', () => {
     const config = createChartConfig('bar')({
       softColors: false,
       data: { rows: [], cols: [] },
       format: 'unit',
     })
 
-    expect(config).toBeNull()
+    assert.strictEqual(config, null)
   })
 })

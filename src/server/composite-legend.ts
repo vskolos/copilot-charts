@@ -3,7 +3,7 @@ import type { CanvasRenderingContext2D } from 'skia-canvas'
 
 import { Canvas } from 'skia-canvas'
 
-import { getInterFontCss } from '@/utils/get-inter-font-css.ts'
+import { getInterFontCss } from '#/utils/get-inter-font-css.ts'
 
 const LEGEND_ROW_HEIGHT = 24
 const LEGEND_PADDING = 12

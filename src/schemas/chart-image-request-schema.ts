@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-import { ChartType } from '@/schemas/chart-type-schema.ts'
-import { DataFormat } from '@/schemas/data-format-schema.ts'
+import { ChartType } from '#/schemas/chart-type-schema.ts'
+import { DataFormat } from '#/schemas/data-format-schema.ts'
 
 import { entryDataSchema } from './entry-data-schema.ts'
 

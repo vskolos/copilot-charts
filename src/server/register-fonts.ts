@@ -1,7 +1,8 @@
 import Chart from 'chart.js/auto'
+import { join } from 'node:path'
 import { FontLibrary } from 'skia-canvas'
 
-import { INTER_FONT_FAMILY } from '@/constants/export.ts'
+import { INTER_FONT_FAMILY } from '#/constants/export.ts'
 
 let registered = false
 
@@ -13,7 +14,7 @@ const INTER_FONT_FILES = [
 
 export function interFontPaths() {
   return INTER_FONT_FILES.map((file) =>
-    Bun.resolveSync(`../assets/fonts/${file}`, import.meta.dirname),
+    join(import.meta.dirname, '../assets/fonts', file),
   )
 }
 

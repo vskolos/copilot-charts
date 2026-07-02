@@ -2,7 +2,7 @@ import type { Canvas } from 'skia-canvas'
 
 import { Canvas as SkiaCanvas } from 'skia-canvas'
 
-import { getInterFontCss } from '@/utils/get-inter-font-css.ts'
+import { getInterFontCss } from '#/utils/get-inter-font-css.ts'
 
 import { measureTitleLayout, titleMetrics } from './measure-title-height.ts'
 

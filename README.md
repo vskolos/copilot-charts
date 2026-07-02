@@ -4,20 +4,17 @@ Headless Chart.js image export server.
 
 ## Setup
 
-```bash
-bun install
-```
-
-`skia-canvas` requires a native binary. If install fails, run:
+Requires Node.js 24+ and [pnpm](https://pnpm.io/).
 
 ```bash
-bun pm trust skia-canvas && bun install
+corepack enable
+pnpm install
 ```
 
 ## Run
 
 ```bash
-bun start
+pnpm start
 ```
 
 Server listens on port `3000` (override with `PORT`).
@@ -68,5 +65,11 @@ curl -X POST http://localhost:3000/get-chart-image \
 ## Test
 
 ```bash
-bun test
+pnpm test
+```
+
+## Typecheck
+
+```bash
+pnpm typecheck
 ```

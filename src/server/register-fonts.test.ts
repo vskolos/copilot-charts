@@ -1,36 +1,34 @@
-import { beforeAll, describe, expect, test } from 'bun:test'
 import Chart from 'chart.js/auto'
+import assert from 'node:assert/strict'
+import { access } from 'node:fs/promises'
+import { before, describe, test } from 'node:test'
 import { Canvas, FontLibrary } from 'skia-canvas'
 
-import { INTER_FONT_FAMILY } from '@/constants/export.ts'
+import { INTER_FONT_FAMILY } from '#/constants/export.ts'
 
 import { interFontPaths, registerFonts } from './register-fonts.ts'
 
-beforeAll(() => {
+before(() => {
   registerFonts()
 })
 
-describe('registerFonts', () => {
-  test('loads Inter and sets Chart.js default font', () => {
-    expect(FontLibrary.has('Inter')).toBe(true)
-    expect(Chart.defaults.font.family).toBe(INTER_FONT_FAMILY)
+void describe('registerFonts', () => {
+  void test('loads Inter and sets Chart.js default font', () => {
+    assert.strictEqual(FontLibrary.has('Inter'), true)
+    assert.strictEqual(Chart.defaults.font.family, INTER_FONT_FAMILY)
   })
 
-  test('loads vendored Inter font files with cyrillic coverage', async () => {
-    expect(interFontPaths()).toEqual([
-      expect.stringContaining('src/assets/fonts/Inter-Regular.woff2'),
-      expect.stringContaining('src/assets/fonts/Inter-SemiBold.woff2'),
-      expect.stringContaining('src/assets/fonts/Inter-Bold.woff2'),
-    ] as const)
+  void test('loads vendored Inter font files with cyrillic coverage', async () => {
+    const paths = interFontPaths()
 
-    expect(
-      await Promise.all(
-        interFontPaths().map(async (path) => await Bun.file(path).exists()),
-      ),
-    ).toEqual([true, true, true])
+    assert.ok(paths[0]?.includes('src/assets/fonts/Inter-Regular.woff2'))
+    assert.ok(paths[1]?.includes('src/assets/fonts/Inter-SemiBold.woff2'))
+    assert.ok(paths[2]?.includes('src/assets/fonts/Inter-Bold.woff2'))
+
+    await Promise.all(paths.map(async (path) => access(path)))
   })
 
-  test('renders cyrillic month labels with Inter', () => {
+  void test('renders cyrillic month labels with Inter', () => {
     const ctx = new Canvas(120, 24).getContext('2d')
     const sample = 'янв фев мар'
 
@@ -40,10 +38,10 @@ describe('registerFonts', () => {
     ctx.font = '12px sans-serif'
     const fallbackWidth = ctx.measureText(sample).width
 
-    expect(interWidth).not.toBe(fallbackWidth)
+    assert.notStrictEqual(interWidth, fallbackWidth)
   })
 
-  test('uses Inter for axis and data-label font strings', () => {
+  void test('uses Inter for axis and data-label font strings', () => {
     const ctx = new Canvas(10, 10).getContext('2d')
     const sample = 'Ag0123'
 
@@ -53,7 +51,7 @@ describe('registerFonts', () => {
     ctx.font = "12px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
     const helveticaWidth = ctx.measureText(sample).width
 
-    expect(interWidth).not.toBe(helveticaWidth)
-    expect(Math.abs(interWidth - helveticaWidth)).toBeGreaterThan(0.5)
+    assert.notStrictEqual(interWidth, helveticaWidth)
+    assert.ok(Math.abs(interWidth - helveticaWidth) > 0.5)
   })
 })

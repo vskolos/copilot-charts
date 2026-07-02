@@ -2,7 +2,7 @@ import type { CanvasRenderingContext2D } from 'skia-canvas'
 
 import { Canvas } from 'skia-canvas'
 
-import { getInterFontCss } from '@/utils/get-inter-font-css.ts'
+import { getInterFontCss } from '#/utils/get-inter-font-css.ts'
 
 const TITLE_FONT_SIZE = 16
 const TITLE_LINE_HEIGHT = 22

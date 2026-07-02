@@ -1,8 +1,8 @@
-import { mkdir, rename } from 'node:fs/promises'
+import { mkdir, rename, stat } from 'node:fs/promises'
 import { join } from 'node:path'
 
-import { OUTPUT_DIR } from '@/constants/export.ts'
-import { renderChartImage } from '@/server/render-chart-image.ts'
+import { OUTPUT_DIR } from '#/constants/export.ts'
+import { renderChartImage } from '#/server/render-chart-image.ts'
 
 import { visualRegressionCases } from './generate-test-charts.fixtures.ts'
 
@@ -21,9 +21,9 @@ for (const { name, request } of visualRegressionCases) {
     const targetPath = join(REGRESSION_DIR, `${name}.png`)
     await rename(sourcePath, targetPath)
 
-    const file = Bun.file(targetPath)
-    results.push({ name, path: targetPath, bytes: file.size })
-    console.info(`✓ ${name} (${file.size} bytes)`)
+    const { size } = await stat(targetPath)
+    results.push({ name, path: targetPath, bytes: size })
+    console.info(`✓ ${name} (${size} bytes)`)
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     failures.push({ name, error: message })
