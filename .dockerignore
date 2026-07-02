@@ -1,0 +1,11 @@
+node_modules
+.tmp
+charts
+.git
+.gitignore
+.env*
+*.md
+.vscode
+coverage
+dist
+out
