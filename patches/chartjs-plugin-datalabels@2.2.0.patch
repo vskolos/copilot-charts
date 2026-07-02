@@ -1,0 +1,25 @@
+diff --git a/package.json b/package.json
+index 3a4e7e4dd1ecd29f95db6eb030f244068e83f0cc..24c325902b188a398aa6da7290f7725f71429cb3 100644
+--- a/package.json
++++ b/package.json
+@@ -7,6 +7,20 @@
+   "main": "dist/chartjs-plugin-datalabels.js",
+   "module": "dist/chartjs-plugin-datalabels.esm.js",
+   "types": "types/index.d.ts",
++  "exports": {
++    ".": {
++      "types": "./types/index.d.ts",
++      "import": "./dist/chartjs-plugin-datalabels.esm.js",
++      "require": "./dist/chartjs-plugin-datalabels.js",
++      "default": "./dist/chartjs-plugin-datalabels.js"
++    },
++    "./types/options": {
++      "types": "./types/options.d.ts"
++    },
++    "./types/context": {
++      "types": "./types/context.d.ts"
++    }
++  },
+   "repository": {
+     "type": "git",
+     "url": "https://github.com/chartjs/chartjs-plugin-datalabels.git"
