@@ -167,10 +167,7 @@ export default defineConfig({
     'eslint/func-style': ['warn', 'declaration'],
     'eslint/grouped-accessor-pairs': 'warn',
     'eslint/guard-for-in': 'warn',
-    'eslint/id-length': [
-      'error',
-      { exceptions: ['a', 'b', 'i', 'j', 'x', 'y', 'z', '_'] },
-    ],
+    'eslint/id-length': ['error', { exceptions: ['a', 'b', 'i', 'j', '_'] }],
     'eslint/logical-assignment-operators': 'warn',
     'eslint/max-params': 'warn',
     'eslint/no-duplicate-imports': ['warn', { allowSeparateTypeImports: true }],
@@ -502,7 +499,11 @@ export default defineConfig({
     'import/namespace': 'error',
 
     // import – restriction
-    'import/extensions': 'error',
+    'import/extensions': [
+      'error',
+      'always',
+      { checkTypeImports: true, ignorePackages: true },
+    ],
     'import/no-amd': 'error',
     'import/no-commonjs': 'error',
     'import/no-default-export': 'error',
