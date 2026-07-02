@@ -1,0 +1,9 @@
+services:
+  server:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      OUTPUT_DIR: /data/charts
+    volumes:
+      - ./.charts:/data/charts
