@@ -1,0 +1,17 @@
+{
+  "type": "radar",
+  "data": {
+    "Team A": {
+      "Speed": 85,
+      "Quality": 72,
+      "Cost": 60,
+      "Support": 90,
+      "Features": 78
+    }
+  },
+  "width": 500,
+  "height": 500,
+  "format": "unit",
+  "softColors": true,
+  "title": "Team A scorecard"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "donut",
+  "data": {
+    "Market share": { "Chrome": 65, "Safari": 20, "Firefox": 8, "Other": 7 }
+  },
+  "width": 500,
+  "height": 500,
+  "format": "percent",
+  "softColors": false,
+  "labelThreshold": 0.05,
+  "title": "Browser market share"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "line",
+  "data": {
+    "Revenue": { "Jan": 12000, "Feb": 15000, "Mar": 13500, "Apr": 18000 },
+    "Costs": { "Jan": 8000, "Feb": 9000, "Mar": 8500, "Apr": 9500 }
+  },
+  "width": 800,
+  "height": 400,
+  "format": "money",
+  "softColors": false,
+  "title": "Revenue vs costs"
+}

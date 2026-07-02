@@ -1,0 +1,17 @@
+{
+  "type": "treemap",
+  "data": {
+    "Revenue by region": {
+      "North America": 420,
+      "Europe": 310,
+      "Asia": 280,
+      "Other": 90
+    }
+  },
+  "width": 600,
+  "height": 400,
+  "format": "money",
+  "softColors": false,
+  "labelThreshold": 0.08,
+  "title": "Revenue by region"
+}

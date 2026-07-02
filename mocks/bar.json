@@ -1,0 +1,16 @@
+{
+  "type": "bar",
+  "data": {
+    "Q1 2025": {
+      "Product A": 450,
+      "Product B": 320,
+      "Product C": 180,
+      "Product D": 90
+    }
+  },
+  "width": 600,
+  "height": 400,
+  "format": "unit",
+  "softColors": true,
+  "title": "Q1 2025 product sales"
+}

@@ -1,0 +1,13 @@
+{
+  "type": "heatmap",
+  "data": {
+    "Mon": { "9am": 12, "12pm": 45, "3pm": 38, "6pm": 22 },
+    "Tue": { "9am": 18, "12pm": 52, "3pm": 41, "6pm": 28 },
+    "Wed": { "9am": 15, "12pm": 48, "3pm": 44, "6pm": 31 }
+  },
+  "width": 600,
+  "height": 400,
+  "format": "unit",
+  "softColors": false,
+  "title": "Hourly activity by weekday"
+}
