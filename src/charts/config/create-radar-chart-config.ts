@@ -10,30 +10,24 @@ import { addLegend } from './helpers/add-legend.ts'
 import { addLineElement } from './helpers/add-line-element.ts'
 import { addRScaleTicksFormatter } from './helpers/add-r-scale-ticks-formatter.ts'
 import { addTooltip } from './helpers/add-tooltip.ts'
-import { parseRowHeader } from './helpers/parse-row-header.ts'
 import { pipe } from './helpers/pipe.ts'
 
 export function createRadarChartConfig({
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
-  const { rows } = data
-  if (rows.length < 2) {
+  const { columnHeaders, rowHeaders, values } = data
+
+  if (rowHeaders.length === 0) {
     return null
   }
 
-  const parsed = parseRowHeader(rows)
-  if (!parsed) {
-    return null
-  }
-
-  const { header, activeRow } = parsed
-  const labels = header.slice(1).toReversed()
-  const values = activeRow.slice(1).map(Number).toReversed()
+  const labels = columnHeaders.toReversed()
+  const rowValues = (values[0] ?? []).toReversed()
 
   const datasets = [
     {
-      data: values,
+      data: rowValues,
       backgroundColor: '#008ffb33',
       borderColor: '#008ffb',
     },

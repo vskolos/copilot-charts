@@ -10,11 +10,12 @@ const colEntryData: EntryData = {
 }
 
 describe('createTableData', () => {
-  test('converts entry data to rows and cols', () => {
+  test('converts entry data to structured table', () => {
     const table = createTableData(colEntryData)
 
-    expect(table.rows[0]).toEqual(['', 'm01', 'm02', 'm03'])
-    expect(table.rows[1]?.[0]).toBe('Series A')
-    expect(table.cols[1]?.[0]).toBe('m01')
+    expect(table.columnHeaders).toEqual(['m01', 'm02', 'm03'])
+    expect(table.rowHeaders).toEqual(['Series A', 'Series B'])
+    expect(table.values[0]).toEqual([100, 200, 150])
+    expect(table.values[1]).toEqual([50, 75, 60])
   })
 })

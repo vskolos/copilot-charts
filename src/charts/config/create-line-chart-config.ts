@@ -15,7 +15,6 @@ import { addXScaleBorder } from './helpers/add-x-scale-border.ts'
 import { addXScaleGrid } from './helpers/add-x-scale-grid.ts'
 import { addYScaleBorder } from './helpers/add-y-scale-border.ts'
 import { addYScaleTicksFormatter } from './helpers/add-y-scale-ticks-formatter.ts'
-import { colLabels } from './helpers/col-labels.ts'
 import { pipe } from './helpers/pipe.ts'
 
 export function createLineChartConfig({
@@ -23,22 +22,20 @@ export function createLineChartConfig({
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
-  const { cols } = data
+  const { columnHeaders, rowHeaders, values } = data
 
-  if (cols.length === 0) {
+  if (rowHeaders.length === 0) {
     return null
   }
 
-  const labels = colLabels(cols)
+  const labels = columnHeaders
 
-  const datasets = cols.slice(1).map((col, colIndex) => {
-    const label = col[0] ?? ''
-    const values = col.slice(1).map(Number)
-    const color = getChartColor({ index: colIndex, softColors })
+  const datasets = rowHeaders.map((label, rowIndex) => {
+    const color = getChartColor({ index: rowIndex, softColors })
 
     return {
       label,
-      data: values,
+      data: values[rowIndex] ?? [],
       backgroundColor: color,
       borderColor: color,
     }

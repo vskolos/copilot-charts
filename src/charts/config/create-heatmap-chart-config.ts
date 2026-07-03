@@ -20,8 +20,6 @@ import { addXScaleLabels } from './helpers/add-x-scale-labels.ts'
 import { addYScaleGrid } from './helpers/add-y-scale-grid.ts'
 import { addYScaleLabels } from './helpers/add-y-scale-labels.ts'
 import { addYScaleTicks } from './helpers/add-y-scale-ticks.ts'
-import { colLabels } from './helpers/col-labels.ts'
-import { maxNumericValue } from './helpers/max-numeric-value.ts'
 import { pipe } from './helpers/pipe.ts'
 
 type MatrixPoint = {
@@ -69,29 +67,21 @@ export function createHeatMapChartConfig({
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
-  const { cols } = data
+  const { columnHeaders, rowHeaders, values } = data
 
-  if (cols.length === 0) {
+  if (columnHeaders.length === 0) {
     return null
   }
 
-  const xLabels = colLabels(cols)
-
-  if (xLabels.length === 0) {
-    return null
-  }
-
-  const yLabels = cols.slice(1).map((col) => col[0] ?? '')
-
-  const maxValue = maxNumericValue(cols.slice(1).flat())
+  const maxValue = Math.max(0, ...values.flat())
 
   const datasets = [
     {
-      data: cols.slice(1).flatMap((col, colIndex) =>
-        col.slice(1).map((value, rowIndex) => ({
-          [X_AXIS_KEY]: xLabels[rowIndex] ?? '',
-          [Y_AXIS_KEY]: yLabels[colIndex] ?? '',
-          [VALUE_KEY]: Number(value),
+      data: values.flatMap((row, rowIndex) =>
+        row.map((value, colIndex) => ({
+          [X_AXIS_KEY]: columnHeaders[colIndex] ?? '',
+          [Y_AXIS_KEY]: rowHeaders[rowIndex] ?? '',
+          [VALUE_KEY]: value,
         })),
       ),
       backgroundColor: (ctx) => {
@@ -99,8 +89,8 @@ export function createHeatMapChartConfig({
         const alpha = ((point[VALUE_KEY] / maxValue) * 100).toFixed(2)
         return `rgba(63, 81, 181, ${alpha}%)`
       },
-      width: ({ chart }) => matrixCellSize(chart, xLabels.length).width,
-      height: ({ chart }) => matrixCellSize(chart, yLabels.length).height,
+      width: ({ chart }) => matrixCellSize(chart, columnHeaders.length).width,
+      height: ({ chart }) => matrixCellSize(chart, rowHeaders.length).height,
     },
   ] satisfies ChartDataset<'matrix', MatrixDataPoint[]>[]
 
@@ -111,11 +101,11 @@ export function createHeatMapChartConfig({
       labels: [],
     }),
     addPlugins([ChartDataLabels]),
-    addXScaleLabels(xLabels),
+    addXScaleLabels(columnHeaders),
     addXScaleGrid(false),
-    addYScaleLabels(yLabels, true),
+    addYScaleLabels(rowHeaders, true),
     addYScaleGrid(false),
-    addYScaleTicks(yLabels.length, false),
+    addYScaleTicks(rowHeaders.length, false),
     addTooltip({
       bodySpacing: 8,
       callbacks: {

@@ -11,8 +11,6 @@ import { formatter } from '@/format/formatter.ts'
 import { defaultConfig } from './default-config.ts'
 import { addLegend } from './helpers/add-legend.ts'
 import { addTooltip } from './helpers/add-tooltip.ts'
-import { maxNumericValue } from './helpers/max-numeric-value.ts'
-import { parseRowHeader } from './helpers/parse-row-header.ts'
 import { pipe } from './helpers/pipe.ts'
 
 type TreemapItem = { label: string; value: number; color: string | undefined }
@@ -33,32 +31,25 @@ export function createTreeMapChartConfig({
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
-  const { rows } = data
+  const { columnHeaders, rowHeaders, values } = data
 
-  if (rows.length < 2) {
+  if (rowHeaders.length === 0) {
     return null
   }
 
-  const parsed = parseRowHeader(rows)
-
-  if (!parsed) {
-    return null
-  }
-
-  const { header, activeRow } = parsed
-  const labels = header.slice(1)
-  const values = activeRow.slice(1).map(Number)
+  const labels = columnHeaders
+  const rowValues = values[0] ?? []
   const colors = labels.map((_, index) =>
     getChartColor({ index, softColors, opacity: 0.85 }),
   )
 
   const dataArray: TreemapItem[] = labels.map((label, index) => ({
     label,
-    value: values[index] ?? 0,
+    value: rowValues[index] ?? 0,
     color: colors[index],
   }))
 
-  const maxValue = maxNumericValue(rows.slice(1).flat())
+  const maxValue = Math.max(0, ...values.flat())
 
   const datasets = [
     {

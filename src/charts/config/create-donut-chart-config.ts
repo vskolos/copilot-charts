@@ -11,7 +11,6 @@ import { addCutout } from './helpers/add-cutout.ts'
 import { addLegend } from './helpers/add-legend.ts'
 import { addPlugins } from './helpers/add-plugins.ts'
 import { addTooltip } from './helpers/add-tooltip.ts'
-import { parseRowHeader } from './helpers/parse-row-header.ts'
 import { pipe } from './helpers/pipe.ts'
 
 export function createDonutChartConfig({
@@ -20,25 +19,26 @@ export function createDonutChartConfig({
   softColors,
   labelThreshold = 0.05,
 }: ChartOptions): ChartConfiguration | null {
-  const parsed = parseRowHeader(data.rows)
+  const { columnHeaders, rowHeaders, values } = data
 
-  if (!parsed) {
+  if (rowHeaders.length === 0) {
     return null
   }
 
-  const { header, activeRow } = parsed
-  const labels = header.slice(1)
-  const values = activeRow.slice(1).map(Number)
+  const labels = columnHeaders
+  const rowValues = values[0] ?? []
 
-  if (values.length === 0) {
+  if (rowValues.length === 0) {
     return null
   }
 
-  const colors = values.map((_, index) => getChartColor({ index, softColors }))
+  const colors = rowValues.map((_, index) =>
+    getChartColor({ index, softColors }),
+  )
 
   const datasets = [
     {
-      data: values,
+      data: rowValues,
       backgroundColor: colors,
       hoverBorderWidth: 0,
     },

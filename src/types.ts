@@ -1,8 +1,9 @@
 import type { DataFormat } from '@/schemas/data-format-schema.ts'
 
 export type TableData = {
-  rows: string[][]
-  cols: string[][]
+  columnHeaders: string[]
+  rowHeaders: string[]
+  values: number[][]
 }
 
 export type ChartJsType =

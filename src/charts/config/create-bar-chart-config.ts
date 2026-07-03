@@ -19,7 +19,6 @@ import { addXScaleBorder } from './helpers/add-x-scale-border.ts'
 import { addXScaleGrid } from './helpers/add-x-scale-grid.ts'
 import { addYScaleBorder } from './helpers/add-y-scale-border.ts'
 import { addYScaleTicksFormatter } from './helpers/add-y-scale-ticks-formatter.ts'
-import { parseRowHeader } from './helpers/parse-row-header.ts'
 import { pipe } from './helpers/pipe.ts'
 
 export function createBarChartConfig({
@@ -27,20 +26,19 @@ export function createBarChartConfig({
   format,
   softColors,
 }: ChartOptions): ChartConfiguration | null {
-  const parsed = parseRowHeader(data.rows)
+  const { columnHeaders, rowHeaders, values } = data
 
-  if (!parsed) {
+  if (rowHeaders.length === 0) {
     return null
   }
 
-  const { header, activeRow } = parsed
-  const labels = header.slice(1)
+  const labels = columnHeaders
   const color = getChartColor({ index: 0, softColors, opacity: 0.85 })
 
   const datasets = [
     {
-      label: activeRow[0] ?? '',
-      data: activeRow.slice(1).map(Number),
+      label: rowHeaders[0] ?? '',
+      data: values[0] ?? [],
       backgroundColor: color,
       borderColor: color,
     },

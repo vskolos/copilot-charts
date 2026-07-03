@@ -48,7 +48,7 @@ describe('createChartConfig', () => {
   test('returns null for empty data', () => {
     const config = createChartConfig('bar')({
       softColors: false,
-      data: { rows: [], cols: [] },
+      data: { columnHeaders: [], rowHeaders: [], values: [] },
       format: 'unit',
     })
 

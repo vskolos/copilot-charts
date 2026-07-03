@@ -19,7 +19,6 @@ import { addXScaleBorder } from './helpers/add-x-scale-border.ts'
 import { addXScaleGrid } from './helpers/add-x-scale-grid.ts'
 import { addYScaleBorder } from './helpers/add-y-scale-border.ts'
 import { addYScaleTicksFormatter } from './helpers/add-y-scale-ticks-formatter.ts'
-import { colLabels } from './helpers/col-labels.ts'
 import { pipe } from './helpers/pipe.ts'
 
 export function createAreaChartConfig({
@@ -27,30 +26,25 @@ export function createAreaChartConfig({
   format,
   softColors,
 }: ChartOptions): ChartConfiguration | null {
-  const { cols } = data
+  const { columnHeaders, rowHeaders, values } = data
 
-  if (cols.length === 0) {
+  if (rowHeaders.length === 0) {
     return null
   }
 
-  const labels = colLabels(cols)
+  const labels = columnHeaders
 
-  const datasets = cols.slice(1).map((col, colIndex) => {
-    const label = col[0] ?? ''
-    const values = col.slice(1).map(Number)
-
-    return {
-      label,
-      data: values,
-      backgroundColor: getChartColor({
-        index: colIndex,
-        softColors,
-        opacity: 0.3,
-      }),
-      borderColor: getChartColor({ index: colIndex, softColors }),
-      fill: 'origin' as const,
-    }
-  }) satisfies ChartDataset<'line'>[]
+  const datasets = rowHeaders.map((label, rowIndex) => ({
+    label,
+    data: values[rowIndex] ?? [],
+    backgroundColor: getChartColor({
+      index: rowIndex,
+      softColors,
+      opacity: 0.3,
+    }),
+    borderColor: getChartColor({ index: rowIndex, softColors }),
+    fill: 'origin' as const,
+  })) satisfies ChartDataset<'line'>[]
 
   return pipe(
     defaultConfig({ type: 'line', datasets, labels }),
