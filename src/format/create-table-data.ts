@@ -35,7 +35,7 @@ export function createTableData(
     for (const innerValue of Object.values(outerEntry[1])) {
       const row = rows[outerIndex]
       if (row) {
-        row.push(`${innerValue ?? 0}`)
+        row.push(String(innerValue))
       }
     }
   }
