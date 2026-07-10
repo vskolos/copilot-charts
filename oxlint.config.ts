@@ -200,6 +200,7 @@ export default defineConfig({
     'eslint/yoda': 'warn',
 
     // eslint – nursery
+    'eslint/no-unreachable-loop': 'warn',
     'eslint/no-useless-assignment': 'warn',
 
     // typescript – correctness
@@ -227,7 +228,18 @@ export default defineConfig({
     'typescript/prefer-as-const': 'error',
     'typescript/prefer-namespace-keyword': 'error',
     'typescript/require-array-sort-compare': 'error',
-    'typescript/restrict-template-expressions': 'error',
+    'typescript/restrict-template-expressions': [
+      'error',
+      {
+        allowAny: false,
+        allowArray: false,
+        allowBoolean: false,
+        allowNever: false,
+        allowNullish: false,
+        allowNumber: true,
+        allowRegExp: false,
+      },
+    ],
     'typescript/triple-slash-reference': 'error',
     'typescript/unbound-method': 'error',
 
@@ -240,7 +252,10 @@ export default defineConfig({
     'typescript/no-empty-object-type': 'error',
     'typescript/no-explicit-any': 'error',
     'typescript/no-import-type-side-effects': 'error',
-    'typescript/no-invalid-void-type': 'error',
+    'typescript/no-invalid-void-type': [
+      'error',
+      { allowInGenericTypeArguments: true },
+    ],
     'typescript/no-namespace': 'error',
     'typescript/no-non-null-assertion': 'error',
     'typescript/no-require-imports': 'error',
@@ -362,7 +377,8 @@ export default defineConfig({
     'unicorn/no-accessor-recursion': 'error',
     'unicorn/no-array-fill-with-reference-type': 'error',
     'unicorn/no-array-reverse': 'error',
-    'unicorn/no-array-sort': 'error',
+    'unicorn/no-array-sort': ['error', { allowAfterSpread: true }],
+    'unicorn/no-confusing-array-with': 'error',
     'unicorn/no-instanceof-builtins': 'error',
     'unicorn/prefer-add-event-listener': 'error',
     'unicorn/require-module-specifiers': 'error',
@@ -421,6 +437,7 @@ export default defineConfig({
     'unicorn/consistent-template-literal-escape': 'warn',
     'unicorn/custom-error-definition': 'warn',
     'unicorn/error-message': 'warn',
+    'unicorn/explicit-timer-delay': 'warn',
     'unicorn/filename-case': 'warn',
     'unicorn/max-nested-calls': 'warn',
     'unicorn/no-array-method-this-argument': 'warn',
@@ -692,6 +709,7 @@ export default defineConfig({
       files: ['**/*.mocks.*', '**/*.fixtures.*'],
       rules: {
         'eslint/id-length': 'off',
+        'eslint/max-lines': 'off',
       },
     },
   ],
