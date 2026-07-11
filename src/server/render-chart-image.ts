@@ -33,6 +33,9 @@ const CHART_TYPES_WITH_LEGEND = new Set<ChartType>([
   'stacked bar',
   'line',
   'donut',
+  'radar',
+  'polar area',
+  'bubble',
 ])
 
 export async function renderChartImage(

@@ -151,6 +151,36 @@ const radarManyAxes: EntryData = {
   },
 }
 
+const radarMultiSeries: EntryData = {
+  'Team A': {
+    Speed: 85,
+    Quality: 72,
+    Cost: 60,
+    Support: 90,
+    Features: 78,
+  },
+  'Team B': {
+    Speed: 70,
+    Quality: 88,
+    Cost: 75,
+    Support: 65,
+    Features: 92,
+  },
+}
+
+const bubbleBasic: EntryData = {
+  'Product A': { x: 20, y: 30, r: 15 },
+  'Product B': { x: 40, y: 10, r: 10 },
+  'Product C': { x: 30, y: 50, r: 20 },
+  'Product D': { x: 60, y: 35, r: 12 },
+}
+
+const bubbleSoft: EntryData = {
+  Alpha: { x: 10, y: 80, r: 8 },
+  Beta: { x: 45, y: 55, r: 18 },
+  Gamma: { x: 75, y: 25, r: 14 },
+}
+
 const treemapUneven: EntryData = {
   Portfolio: {
     'Mega Corp': 45_000_000,
@@ -505,6 +535,35 @@ export const visualRegressionCases: VisualRegressionCase[] = [
     data: radarManyAxes,
     width: 400,
     height: 400,
+  }),
+
+  regressionCase('radar-multi-series', {
+    type: 'radar',
+    data: radarMultiSeries,
+    softColors: true,
+  }),
+
+  // bubble
+
+  regressionCase('bubble-basic', { type: 'bubble', data: bubbleBasic }),
+
+  regressionCase('bubble-soft-colors', {
+    type: 'bubble',
+    data: bubbleSoft,
+    softColors: true,
+  }),
+
+  // polar area
+
+  regressionCase('polar-area-many-slices', {
+    type: 'polar area',
+    data: donutManySlices,
+  }),
+
+  regressionCase('polar-area-two-slices', {
+    type: 'polar area',
+    data: donutTwoSlices,
+    softColors: true,
   }),
 
   // treemap

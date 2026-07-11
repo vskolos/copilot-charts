@@ -1,0 +1,11 @@
+{
+  "type": "polar area",
+  "data": {
+    "Market share": { "Chrome": 65, "Safari": 20, "Firefox": 8, "Other": 7 }
+  },
+  "width": 500,
+  "height": 500,
+  "format": "percent",
+  "softColors": false,
+  "title": "Browser market share"
+}

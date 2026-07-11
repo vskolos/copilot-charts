@@ -1,6 +1,6 @@
 import type { DataFormat } from '@/schemas/data-format-schema.ts'
 
-import { R_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
+import { R_AXIS_KEY, X_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
 import { formatter } from '@/format/formatter.ts'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -41,7 +41,7 @@ type FormatTooltipLabelFn = (
 ) => string
 
 export const formatTooltipLabel: Record<
-  'yAxis' | 'radial' | 'scalar',
+  'yAxis' | 'radial' | 'scalar' | 'bubble',
   FormatTooltipLabelFn
 > = {
   yAxis: (format, datasetLabel, parsed) =>
@@ -60,4 +60,36 @@ export const formatTooltipLabel: Record<
       itemLabel,
       typeof parsed === 'number' ? parsed : undefined,
     ),
+
+  bubble: (format, itemLabel, raw) => {
+    const formatValue = formatter(format)
+
+    const xValue = readNumericField(raw, X_AXIS_KEY)
+    const yValue = readNumericField(raw, Y_AXIS_KEY)
+    const rValue = readNumericField(raw, R_AXIS_KEY)
+
+    const parts: string[] = []
+
+    if (xValue !== undefined) {
+      parts.push(formatValue(xValue))
+    }
+
+    if (yValue !== undefined) {
+      parts.push(formatValue(yValue))
+    }
+
+    if (rValue !== undefined) {
+      parts.push(`r ${formatValue(rValue)}`)
+    }
+
+    let result = itemLabel ?? ''
+
+    if (result) {
+      result += ': '
+    }
+
+    result += parts.join(', ')
+
+    return result
+  },
 }

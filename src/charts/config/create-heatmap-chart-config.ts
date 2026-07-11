@@ -6,6 +6,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 import type { ChartOptions } from '@/types.ts'
 
+import { getChartColor } from '@/charts/get-chart-color.ts'
+import { CHART_STROKE_WIDTH } from '@/constants/chart-style.ts'
 import { VALUE_KEY, X_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
 import { INTER_FONT_FAMILY } from '@/constants/export.ts'
 import { formatter } from '@/format/formatter.ts'
@@ -58,12 +60,21 @@ function matrixCellSize(
   const areaHeight = chart.chartArea?.height ?? chart.height
 
   return {
-    width: areaWidth / labelCount - 1,
-    height: areaHeight / labelCount - 1,
+    width: areaWidth / labelCount - CHART_STROKE_WIDTH,
+    height: areaHeight / labelCount - CHART_STROKE_WIDTH,
   }
 }
 
+function heatIntensity(value: number, maxValue: number): number {
+  if (maxValue <= 0) {
+    return 0
+  }
+
+  return value / maxValue
+}
+
 export function createHeatMapChartConfig({
+  softColors,
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
@@ -74,6 +85,7 @@ export function createHeatMapChartConfig({
   }
 
   const maxValue = Math.max(0, ...values.flat())
+  const heatColor = getChartColor({ index: 0, softColors })
 
   const datasets = [
     {
@@ -86,8 +98,11 @@ export function createHeatMapChartConfig({
       ),
       backgroundColor: (ctx) => {
         const point = asMatrixPoint(ctx.dataset.data[ctx.dataIndex])
-        const alpha = ((point[VALUE_KEY] / maxValue) * 100).toFixed(2)
-        return `rgba(63, 81, 181, ${alpha}%)`
+        return getChartColor({
+          index: 0,
+          softColors,
+          opacity: heatIntensity(point[VALUE_KEY], maxValue),
+        })
       },
       width: ({ chart }) => matrixCellSize(chart, columnHeaders.length).width,
       height: ({ chart }) => matrixCellSize(chart, rowHeaders.length).height,
@@ -120,8 +135,9 @@ export function createHeatMapChartConfig({
       font: { family: INTER_FONT_FAMILY },
       color: (ctx: Context) => {
         const point = asMatrixPoint(ctx.dataset.data[ctx.dataIndex])
-        const alpha = (point[VALUE_KEY] / maxValue) * 100
-        return alpha > 25 ? '#fff' : '#3F51B5'
+        return heatIntensity(point[VALUE_KEY], maxValue) > 0.25
+          ? '#fff'
+          : heatColor
       },
       display: true,
       formatter: (_, ctx: Context) => {

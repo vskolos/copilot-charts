@@ -4,6 +4,7 @@ import type { TreemapDataPoint } from 'chartjs-chart-treemap'
 import type { ChartOptions } from '@/types.ts'
 
 import { getChartColor } from '@/charts/get-chart-color.ts'
+import { CHART_STROKE_WIDTH } from '@/constants/chart-style.ts'
 import { DATA_KEY, VALUE_KEY } from '@/constants/config-keys.ts'
 import { INTER_FONT_FAMILY } from '@/constants/export.ts'
 import { formatter } from '@/format/formatter.ts'
@@ -56,6 +57,7 @@ export function createTreeMapChartConfig({
       tree: dataArray,
       key: 'value',
       data: [],
+      spacing: CHART_STROKE_WIDTH / 2,
       backgroundColor: (ctx) =>
         ctx.type === 'data' && isTreemapRaw(ctx.raw)
           ? (ctx.raw[DATA_KEY].color ?? 'transparent')

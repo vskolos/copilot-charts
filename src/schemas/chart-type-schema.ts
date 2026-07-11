@@ -10,6 +10,8 @@ export const ChartType = z.enum(
     'donut',
     'radar',
     'treemap',
+    'bubble',
+    'polar area',
   ],
   { message: 'invalid chart type' },
 )

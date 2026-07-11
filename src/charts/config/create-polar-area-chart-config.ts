@@ -4,21 +4,17 @@ import type { ChartOptions } from '@/types.ts'
 
 import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
 import { getChartColor } from '@/charts/get-chart-color.ts'
-import { createDonutLabelsPlugin } from '@/charts/plugins/create-donut-labels-plugin.ts'
 import { CHART_STROKE_WIDTH } from '@/constants/chart-style.ts'
 
 import { defaultConfig } from './default-config.ts'
-import { addCutout } from './helpers/add-cutout.ts'
 import { addLegend } from './helpers/add-legend.ts'
-import { addPlugins } from './helpers/add-plugins.ts'
 import { addTooltip } from './helpers/add-tooltip.ts'
 import { pipe } from './helpers/pipe.ts'
 
-export function createDonutChartConfig({
+export function createPolarAreaChartConfig({
   data,
   format,
   softColors,
-  labelThreshold = 0.05,
 }: ChartOptions): ChartConfiguration | null {
   const { columnHeaders, rowHeaders, values } = data
 
@@ -33,29 +29,30 @@ export function createDonutChartConfig({
     return null
   }
 
-  const colors = rowValues.map((_, index) =>
+  const borderColors = rowValues.map((_, index) =>
     getChartColor({ index, softColors }),
+  )
+
+  const fillColors = rowValues.map((_, index) =>
+    getChartColor({ index, softColors, opacity: 0.3 }),
   )
 
   const datasets = [
     {
       data: rowValues,
-      backgroundColor: colors,
-      borderColor: colors,
+      backgroundColor: fillColors,
+      borderColor: borderColors,
       borderWidth: CHART_STROKE_WIDTH,
-      hoverBorderWidth: 0,
     },
-  ] satisfies ChartDataset<'doughnut'>[]
+  ] satisfies ChartDataset<'polarArea'>[]
 
   return pipe(
-    defaultConfig({ type: 'doughnut', datasets, labels }),
-    addCutout('65%'),
-    addPlugins([createDonutLabelsPlugin(labelThreshold)]),
+    defaultConfig({ type: 'polarArea', datasets, labels }),
     addTooltip({
       bodySpacing: 8,
       callbacks: {
         label: (ctx) =>
-          formatTooltipLabel.scalar(format, ctx.label, ctx.parsed),
+          formatTooltipLabel.radial(format, ctx.label, ctx.parsed),
       },
     }),
     addLegend(false),

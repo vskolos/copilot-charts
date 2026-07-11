@@ -7,11 +7,18 @@
       "Cost": 60,
       "Support": 90,
       "Features": 78
+    },
+    "Team B": {
+      "Speed": 70,
+      "Quality": 88,
+      "Cost": 75,
+      "Support": 65,
+      "Features": 92
     }
   },
   "width": 500,
   "height": 500,
   "format": "unit",
   "softColors": true,
-  "title": "Team A scorecard"
+  "title": "Team scorecard comparison"
 }

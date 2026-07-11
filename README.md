@@ -49,7 +49,7 @@ Response:
 
 Images are written to `OUTPUT_DIR` (default: `.charts`).
 
-Supported types: `area`, `bar`, `stacked bar`, `line`, `heatmap`, `donut`, `radar`, `treemap`.
+Supported types: `area`, `bar`, `stacked bar`, `line`, `heatmap`, `donut`, `radar`, `treemap`, `bubble`, `polar area`.
 
 ## Docker
 

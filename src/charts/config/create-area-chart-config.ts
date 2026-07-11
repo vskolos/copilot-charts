@@ -7,12 +7,14 @@ import type { ChartOptions } from '@/types.ts'
 
 import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
 import { getChartColor } from '@/charts/get-chart-color.ts'
+import { CHART_STROKE_WIDTH } from '@/constants/chart-style.ts'
 import { INTER_FONT_FAMILY } from '@/constants/export.ts'
 import { formatter } from '@/format/formatter.ts'
 
 import { defaultConfig } from './default-config.ts'
 import { addDataLabels } from './helpers/add-data-labels.ts'
 import { addLegend } from './helpers/add-legend.ts'
+import { addLineElement } from './helpers/add-line-element.ts'
 import { addPlugins } from './helpers/add-plugins.ts'
 import { addTooltip } from './helpers/add-tooltip.ts'
 import { addXScaleBorder } from './helpers/add-x-scale-border.ts'
@@ -49,6 +51,7 @@ export function createAreaChartConfig({
   return pipe(
     defaultConfig({ type: 'line', datasets, labels }),
     addPlugins([ChartDataLabels]),
+    addLineElement(CHART_STROKE_WIDTH),
     addXScaleGrid(false),
     addXScaleBorder(false),
     addYScaleBorder(false),

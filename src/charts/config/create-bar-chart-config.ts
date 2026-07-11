@@ -6,6 +6,7 @@ import type { ChartOptions } from '@/types.ts'
 
 import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
 import { getChartColor } from '@/charts/get-chart-color.ts'
+import { CHART_STROKE_WIDTH } from '@/constants/chart-style.ts'
 import { INTER_FONT_FAMILY } from '@/constants/export.ts'
 import { formatter } from '@/format/formatter.ts'
 
@@ -41,6 +42,7 @@ export function createBarChartConfig({
       data: values[0] ?? [],
       backgroundColor: color,
       borderColor: color,
+      borderWidth: CHART_STROKE_WIDTH,
     },
   ] satisfies ChartDataset<'bar'>[]
 

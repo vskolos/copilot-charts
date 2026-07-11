@@ -1,0 +1,14 @@
+{
+  "type": "bubble",
+  "data": {
+    "Product A": { "x": 20, "y": 30, "r": 15 },
+    "Product B": { "x": 40, "y": 10, "r": 10 },
+    "Product C": { "x": 30, "y": 50, "r": 20 },
+    "Product D": { "x": 60, "y": 35, "r": 12 }
+  },
+  "width": 500,
+  "height": 400,
+  "format": "unit",
+  "softColors": false,
+  "title": "Product positioning"
+}

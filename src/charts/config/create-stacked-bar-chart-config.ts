@@ -8,6 +8,7 @@ import type { ChartOptions } from '@/types.ts'
 import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
 import { getChartColor } from '@/charts/get-chart-color.ts'
 import { totalizerPlugin } from '@/charts/plugins/totalizer-plugin.ts'
+import { CHART_STROKE_WIDTH } from '@/constants/chart-style.ts'
 import { INTER_FONT_FAMILY } from '@/constants/export.ts'
 import { formatter } from '@/format/formatter.ts'
 
@@ -50,6 +51,8 @@ export function createStackedBarChartConfig({
       data: values[rowIndex] ?? [],
       backgroundColor: color,
       borderColor: color,
+      borderWidth: CHART_STROKE_WIDTH,
+      borderSkipped: true,
       barPercentage: 0.75,
     }
   }) satisfies ChartDataset<'bar'>[]
@@ -60,6 +63,8 @@ export function createStackedBarChartConfig({
       data: Array.from({ length: labels.length }, () => 0),
       backgroundColor: 'transparent',
       borderColor: 'transparent',
+      borderWidth: 0,
+      borderSkipped: true,
       barPercentage: 0.75,
     } satisfies ChartDataset<'bar'>)
   }
