@@ -26,7 +26,6 @@ import { addYScaleTicksFormatter } from './helpers/add-y-scale-ticks-formatter.t
 import { pipe } from './helpers/pipe.ts'
 
 export function createStackedBarChartConfig({
-  softColors,
   data,
   format,
   labelThreshold = 0.05,
@@ -40,11 +39,7 @@ export function createStackedBarChartConfig({
   const labels = columnHeaders
 
   const datasets = rowHeaders.map((label, rowIndex) => {
-    const color = getChartColor({
-      index: rowIndex,
-      softColors,
-      opacity: 0.85,
-    })
+    const color = getChartColor({ index: rowIndex, opacity: 0.85 })
 
     return {
       label,

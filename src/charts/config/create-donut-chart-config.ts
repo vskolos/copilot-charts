@@ -17,7 +17,6 @@ import { pipe } from './helpers/pipe.ts'
 export function createDonutChartConfig({
   data,
   format,
-  softColors,
   labelThreshold = 0.05,
 }: ChartOptions): ChartConfiguration | null {
   const { columnHeaders, rowHeaders, values } = data
@@ -33,9 +32,7 @@ export function createDonutChartConfig({
     return null
   }
 
-  const colors = rowValues.map((_, index) =>
-    getChartColor({ index, softColors }),
-  )
+  const colors = rowValues.map((_, index) => getChartColor({ index }))
 
   const datasets = [
     {

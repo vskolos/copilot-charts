@@ -175,12 +175,6 @@ const bubbleBasic: EntryData = {
   'Product D': { x: 60, y: 35, r: 12 },
 }
 
-const bubbleSoft: EntryData = {
-  Alpha: { x: 10, y: 80, r: 8 },
-  Beta: { x: 45, y: 55, r: 18 },
-  Gamma: { x: 75, y: 25, r: 14 },
-}
-
 const treemapUneven: EntryData = {
   Portfolio: {
     'Mega Corp': 45_000_000,
@@ -223,7 +217,6 @@ function regressionCase(
     width,
     height,
     format,
-    softColors,
     labelThreshold,
     title,
   }: Pick<ChartImageRequest, 'type' | 'data'> &
@@ -233,7 +226,6 @@ function regressionCase(
         | 'width'
         | 'height'
         | 'format'
-        | 'softColors'
         | 'labelThreshold'
         | 'title'
       >
@@ -247,7 +239,6 @@ function regressionCase(
       width: width ?? 600,
       height: height ?? 400,
       format: format ?? 'unit',
-      softColors,
       labelThreshold,
       title: title ?? formatRegressionTitle(name),
     },
@@ -263,10 +254,9 @@ export const visualRegressionCases: VisualRegressionCase[] = [
     format: 'money',
   }),
 
-  regressionCase('line-many-series-soft', {
+  regressionCase('line-many-series', {
     type: 'line',
     data: manySeries,
-    softColors: true,
   }),
 
   regressionCase('line-percent-format', {
@@ -321,13 +311,6 @@ export const visualRegressionCases: VisualRegressionCase[] = [
 
   regressionCase('area-many-series', { type: 'area', data: manySeries }),
 
-  regressionCase('area-soft-colors', {
-    type: 'area',
-    data: months12,
-    softColors: true,
-    format: 'money',
-  }),
-
   regressionCase('area-wide-canvas', {
     type: 'area',
     data: months12,
@@ -356,7 +339,7 @@ export const visualRegressionCases: VisualRegressionCase[] = [
     labelThreshold: 0.2,
   }),
 
-  regressionCase('stacked-bar-money-soft', {
+  regressionCase('stacked-bar-money', {
     type: 'stacked bar',
     data: {
       'Dept A': { m01: 1_200_000, m02: 1_350_000, m03: 1_180_000 },
@@ -364,7 +347,6 @@ export const visualRegressionCases: VisualRegressionCase[] = [
       'Dept C': { m01: 450_000, m02: 480_000, m03: 510_000 },
     },
     format: 'money',
-    softColors: true,
   }),
 
   regressionCase('stacked-bar-many-periods', {
@@ -443,12 +425,6 @@ export const visualRegressionCases: VisualRegressionCase[] = [
 
   // bar
 
-  regressionCase('bar-basic-soft', {
-    type: 'bar',
-    data: barManyCategories,
-    softColors: true,
-  }),
-
   regressionCase('bar-many-categories', {
     type: 'bar',
     data: barManyCategories,
@@ -497,7 +473,6 @@ export const visualRegressionCases: VisualRegressionCase[] = [
   regressionCase('donut-two-slices', {
     type: 'donut',
     data: donutTwoSlices,
-    softColors: true,
   }),
 
   regressionCase('donut-money', {
@@ -540,18 +515,11 @@ export const visualRegressionCases: VisualRegressionCase[] = [
   regressionCase('radar-multi-series', {
     type: 'radar',
     data: radarMultiSeries,
-    softColors: true,
   }),
 
   // bubble
 
   regressionCase('bubble-basic', { type: 'bubble', data: bubbleBasic }),
-
-  regressionCase('bubble-soft-colors', {
-    type: 'bubble',
-    data: bubbleSoft,
-    softColors: true,
-  }),
 
   // polar area
 
@@ -563,7 +531,6 @@ export const visualRegressionCases: VisualRegressionCase[] = [
   regressionCase('polar-area-two-slices', {
     type: 'polar area',
     data: donutTwoSlices,
-    softColors: true,
   }),
 
   // treemap
@@ -579,12 +546,11 @@ export const visualRegressionCases: VisualRegressionCase[] = [
     data: treemapManyItems,
   }),
 
-  regressionCase('treemap-soft-two-items', {
+  regressionCase('treemap-two-items', {
     type: 'treemap',
     data: {
       Split: { Large: 900, Small: 100 },
     },
-    softColors: true,
   }),
 
   regressionCase('treemap-long-labels', {

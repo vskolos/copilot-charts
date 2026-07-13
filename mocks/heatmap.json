@@ -8,6 +8,5 @@
   "width": 600,
   "height": 400,
   "format": "unit",
-  "softColors": false,
   "title": "Hourly activity by weekday"
 }

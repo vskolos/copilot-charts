@@ -35,7 +35,6 @@ describe('createChartConfig', () => {
   for (const type of colTypes) {
     test(`builds config for ${type}`, () => {
       const config = createChartConfig(type)({
-        softColors: false,
         data: createTableData(colEntryData),
         format: 'unit',
       })
@@ -48,7 +47,6 @@ describe('createChartConfig', () => {
   for (const type of rowTypes) {
     test(`builds config for ${type}`, () => {
       const config = createChartConfig(type)({
-        softColors: true,
         data: createTableData(rowEntryData),
         format: 'money',
       })
@@ -59,7 +57,6 @@ describe('createChartConfig', () => {
 
   test('builds config for bubble', () => {
     const config = createChartConfig('bubble')({
-      softColors: false,
       data: createTableData(bubbleEntryData),
       format: 'unit',
     })
@@ -70,7 +67,6 @@ describe('createChartConfig', () => {
 
   test('returns null for bubble without x/y/r columns', () => {
     const config = createChartConfig('bubble')({
-      softColors: false,
       data: createTableData(rowEntryData),
       format: 'unit',
     })
@@ -80,7 +76,6 @@ describe('createChartConfig', () => {
 
   test('returns null for empty data', () => {
     const config = createChartConfig('bar')({
-      softColors: false,
       data: { columnHeaders: [], rowHeaders: [], values: [] },
       format: 'unit',
     })

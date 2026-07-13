@@ -35,7 +35,6 @@ Server listens on port `3000` (override with `PORT`).
   "width": 400,
   "height": 300,
   "format": "unit",
-  "softColors": false,
   "labelThreshold": 0.05,
   "title": "Weekly revenue"
 }

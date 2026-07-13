@@ -28,7 +28,6 @@ function isTreemapRaw(value: unknown): value is TreemapRaw {
 }
 
 export function createTreeMapChartConfig({
-  softColors,
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
@@ -41,7 +40,7 @@ export function createTreeMapChartConfig({
   const labels = columnHeaders
   const rowValues = values[0] ?? []
   const colors = labels.map((_, index) =>
-    getChartColor({ index, softColors, opacity: 0.85 }),
+    getChartColor({ index, opacity: 0.85 }),
   )
 
   const dataArray: TreemapItem[] = labels.map((label, index) => ({

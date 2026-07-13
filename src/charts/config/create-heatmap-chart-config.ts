@@ -74,7 +74,6 @@ function heatIntensity(value: number, maxValue: number): number {
 }
 
 export function createHeatMapChartConfig({
-  softColors,
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
@@ -85,7 +84,7 @@ export function createHeatMapChartConfig({
   }
 
   const maxValue = Math.max(0, ...values.flat())
-  const heatColor = getChartColor({ index: 0, softColors })
+  const heatColor = getChartColor({ index: 0 })
 
   const datasets = [
     {
@@ -100,7 +99,6 @@ export function createHeatMapChartConfig({
         const point = asMatrixPoint(ctx.dataset.data[ctx.dataIndex])
         return getChartColor({
           index: 0,
-          softColors,
           opacity: heatIntensity(point[VALUE_KEY], maxValue),
         })
       },

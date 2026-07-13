@@ -14,7 +14,6 @@ import { pipe } from './helpers/pipe.ts'
 export function createPolarAreaChartConfig({
   data,
   format,
-  softColors,
 }: ChartOptions): ChartConfiguration | null {
   const { columnHeaders, rowHeaders, values } = data
 
@@ -29,12 +28,10 @@ export function createPolarAreaChartConfig({
     return null
   }
 
-  const borderColors = rowValues.map((_, index) =>
-    getChartColor({ index, softColors }),
-  )
+  const borderColors = rowValues.map((_, index) => getChartColor({ index }))
 
   const fillColors = rowValues.map((_, index) =>
-    getChartColor({ index, softColors, opacity: 0.3 }),
+    getChartColor({ index, opacity: 0.3 }),
   )
 
   const datasets = [

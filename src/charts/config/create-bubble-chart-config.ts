@@ -4,8 +4,8 @@ import type { ChartOptions } from '@/types.ts'
 
 import { formatTooltipLabel } from '@/charts/format-tooltip-label.ts'
 import { getChartColor } from '@/charts/get-chart-color.ts'
-import { R_AXIS_KEY, X_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
 import { CHART_STROKE_WIDTH } from '@/constants/chart-style.ts'
+import { R_AXIS_KEY, X_AXIS_KEY, Y_AXIS_KEY } from '@/constants/config-keys.ts'
 import { formatter } from '@/format/formatter.ts'
 
 import { defaultConfig } from './default-config.ts'
@@ -23,7 +23,6 @@ function columnIndex(headers: string[], name: string): number {
 }
 
 export function createBubbleChartConfig({
-  softColors,
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
@@ -43,7 +42,7 @@ export function createBubbleChartConfig({
 
   const datasets = rowHeaders.map((label, rowIndex) => {
     const row = values[rowIndex] ?? []
-    const color = getChartColor({ index: rowIndex, softColors })
+    const color = getChartColor({ index: rowIndex })
 
     return {
       label,
@@ -54,11 +53,7 @@ export function createBubbleChartConfig({
           [R_AXIS_KEY]: row[rIndex] ?? 0,
         },
       ],
-      backgroundColor: getChartColor({
-        index: rowIndex,
-        softColors,
-        opacity: 0.3,
-      }),
+      backgroundColor: getChartColor({ index: rowIndex, opacity: 0.3 }),
       borderColor: color,
       borderWidth: CHART_STROKE_WIDTH,
     }

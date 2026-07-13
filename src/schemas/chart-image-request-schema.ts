@@ -14,7 +14,6 @@ export const chartImageRequestSchema = z.object({
   height: z
     .number('height must be a positive number')
     .positive('height must be positive'),
-  softColors: z.boolean().optional(),
   labelThreshold: z
     .number('labelThreshold must be a number between 0 and 1')
     .min(0, 'labelThreshold must be between 0 and 1')

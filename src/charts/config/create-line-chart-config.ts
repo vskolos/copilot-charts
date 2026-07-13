@@ -19,7 +19,6 @@ import { addYScaleTicksFormatter } from './helpers/add-y-scale-ticks-formatter.t
 import { pipe } from './helpers/pipe.ts'
 
 export function createLineChartConfig({
-  softColors,
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
@@ -32,7 +31,7 @@ export function createLineChartConfig({
   const labels = columnHeaders
 
   const datasets = rowHeaders.map((label, rowIndex) => {
-    const color = getChartColor({ index: rowIndex, softColors })
+    const color = getChartColor({ index: rowIndex })
 
     return {
       label,

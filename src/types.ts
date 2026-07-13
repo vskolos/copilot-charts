@@ -19,7 +19,6 @@ export type ChartJsType =
   | 'matrix'
 
 export type ChartOptions = {
-  softColors: boolean
   data: TableData
   format: DataFormat
   labelThreshold?: number

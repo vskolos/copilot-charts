@@ -26,7 +26,6 @@ import { pipe } from './helpers/pipe.ts'
 export function createAreaChartConfig({
   data,
   format,
-  softColors,
 }: ChartOptions): ChartConfiguration | null {
   const { columnHeaders, rowHeaders, values } = data
 
@@ -41,10 +40,9 @@ export function createAreaChartConfig({
     data: values[rowIndex] ?? [],
     backgroundColor: getChartColor({
       index: rowIndex,
-      softColors,
       opacity: 0.3,
     }),
-    borderColor: getChartColor({ index: rowIndex, softColors }),
+    borderColor: getChartColor({ index: rowIndex }),
     fill: 'origin' as const,
   })) satisfies ChartDataset<'line'>[]
 
@@ -71,9 +69,8 @@ export function createAreaChartConfig({
       formatter: (value: string | number) => formatter(format, true)(value),
       color: '#fff',
       backgroundColor: (ctx: Context) =>
-        getChartColor({ index: ctx.datasetIndex, softColors, opacity: 0.85 }),
-      borderColor: (ctx: Context) =>
-        getChartColor({ index: ctx.datasetIndex, softColors }),
+        getChartColor({ index: ctx.datasetIndex, opacity: 0.85 }),
+      borderColor: (ctx: Context) => getChartColor({ index: ctx.datasetIndex }),
       borderRadius: 2,
       padding: 2,
       font: {

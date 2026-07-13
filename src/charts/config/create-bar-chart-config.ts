@@ -25,7 +25,6 @@ import { pipe } from './helpers/pipe.ts'
 export function createBarChartConfig({
   data,
   format,
-  softColors,
 }: ChartOptions): ChartConfiguration | null {
   const { columnHeaders, rowHeaders, values } = data
 
@@ -34,7 +33,7 @@ export function createBarChartConfig({
   }
 
   const labels = columnHeaders
-  const color = getChartColor({ index: 0, softColors, opacity: 0.85 })
+  const color = getChartColor({ index: 0, opacity: 0.85 })
 
   const datasets = [
     {

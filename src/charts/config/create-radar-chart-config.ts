@@ -15,7 +15,6 @@ import { addTooltip } from './helpers/add-tooltip.ts'
 import { pipe } from './helpers/pipe.ts'
 
 export function createRadarChartConfig({
-  softColors,
   data,
   format,
 }: ChartOptions): ChartConfiguration | null {
@@ -28,14 +27,13 @@ export function createRadarChartConfig({
   const labels = columnHeaders.toReversed()
 
   const datasets = rowHeaders.map((label, rowIndex) => {
-    const color = getChartColor({ index: rowIndex, softColors })
+    const color = getChartColor({ index: rowIndex })
 
     return {
       label,
       data: values[rowIndex]?.toReversed() ?? [],
       backgroundColor: getChartColor({
         index: rowIndex,
-        softColors,
         opacity: 0.3,
       }),
       borderColor: color,

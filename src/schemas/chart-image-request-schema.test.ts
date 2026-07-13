@@ -16,29 +16,12 @@ describe('chartImageRequestSchema', () => {
       width: 400,
       height: 300,
       format: 'unit',
-      softColors: false,
     })
 
     expect(result.success).toBe(true)
 
     if (result.success) {
       expect(result.data.type).toBe('bar')
-    }
-  })
-
-  test('accepts request without softColors', () => {
-    const result = chartImageRequestSchema.safeParse({
-      type: 'bar',
-      data: rowEntryData,
-      width: 400,
-      height: 300,
-      format: 'unit',
-    })
-
-    expect(result.success).toBe(true)
-
-    if (result.success) {
-      expect(result.data.softColors).toBeUndefined()
     }
   })
 
@@ -83,7 +66,6 @@ describe('chartImageRequestSchema', () => {
       width: 400,
       height: 300,
       format: 'unit',
-      softColors: false,
     })
 
     expect(result.success).toBe(false)
@@ -100,7 +82,6 @@ describe('chartImageRequestSchema', () => {
       width: 400,
       height: 300,
       format: 'unit',
-      softColors: false,
     })
 
     expect(result.success).toBe(false)

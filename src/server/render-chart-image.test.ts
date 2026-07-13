@@ -43,7 +43,6 @@ describe('renderChartImage', () => {
         width: 400,
         height: 300,
         format: 'unit',
-        softColors: false,
       })
 
       const filepath = `${OUTPUT_DIR}/${result.filename}`
@@ -62,7 +61,6 @@ describe('renderChartImage', () => {
       width: 400,
       height: 300,
       format: 'unit',
-      softColors: false,
     })
 
     const filepath = `${OUTPUT_DIR}/${result.filename}`

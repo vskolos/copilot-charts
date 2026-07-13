@@ -45,7 +45,6 @@ export async function renderChartImage(
   const buildConfig = createChartConfig(request.type)
 
   const config = buildConfig({
-    softColors: request.softColors ?? false,
     data: tableData,
     format: request.format,
     labelThreshold: request.labelThreshold,
